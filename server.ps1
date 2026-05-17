@@ -2,8 +2,20 @@ $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $port = 8000
-$listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Any, $port)
-$listener.Start()
+$listener = $null
+while ($port -lt 8010) {
+  try {
+    $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Any, $port)
+    $listener.Start()
+    break
+  } catch {
+    $port += 1
+  }
+}
+
+if ($null -eq $listener) {
+  throw "No available port found from 8000 to 8009."
+}
 
 function Get-ContentType($path) {
   switch ([System.IO.Path]::GetExtension($path).ToLowerInvariant()) {
@@ -38,6 +50,8 @@ Write-Host ""
 while ($true) {
   $client = $listener.AcceptTcpClient()
   try {
+    $client.ReceiveTimeout = 3000
+    $client.SendTimeout = 3000
     $stream = $client.GetStream()
     $reader = [System.IO.StreamReader]::new($stream, [System.Text.Encoding]::ASCII, $false, 1024, $true)
     $requestLine = $reader.ReadLine()
@@ -46,7 +60,12 @@ while ($true) {
       continue
     }
 
-    while (($line = $reader.ReadLine()) -ne "") { }
+    while ($true) {
+      $line = $reader.ReadLine()
+      if ([string]::IsNullOrEmpty($line)) {
+        break
+      }
+    }
 
     $parts = $requestLine.Split(" ")
     $urlPath = if ($parts.Count -ge 2) { $parts[1].Split("?")[0] } else { "/" }

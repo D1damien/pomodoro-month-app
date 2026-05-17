@@ -1,12 +1,12 @@
 :root {
-  --bg: #f5f6fb;
+  --bg: #f3f5f8;
   --card: #ffffff;
   --ink: #161827;
   --muted: #747784;
   --line: #e6e8ef;
   --teal: #1d7f94;
   --tomato: #dc2b00;
-  --shadow: 0 8px 22px rgba(30, 34, 48, .13);
+  --shadow: 0 10px 26px rgba(28, 32, 42, .10);
   color-scheme: light;
   font-family: Inter, "SF Pro Display", "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
 }
@@ -18,7 +18,7 @@
 html,
 body {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   margin: 0;
 }
 
@@ -34,12 +34,12 @@ input {
 }
 
 .app {
-  width: min(100vw, 500px);
-  height: 100svh;
+  width: min(100vw, 430px);
+  height: 100dvh;
   margin: 0 auto;
-  padding: max(10px, env(safe-area-inset-top)) 14px max(10px, env(safe-area-inset-bottom));
+  padding: max(8px, env(safe-area-inset-top)) 14px max(8px, env(safe-area-inset-bottom));
   display: grid;
-  grid-template-rows: minmax(250px, 42svh) minmax(330px, 1fr);
+  grid-template-rows: clamp(244px, 37dvh, 286px) minmax(0, 1fr);
   gap: 10px;
 }
 
@@ -50,8 +50,9 @@ input {
 
 .timer-panel {
   display: grid;
-  grid-template-rows: 34px 56px minmax(132px, 1fr) 46px;
+  grid-template-rows: 32px 46px minmax(0, 1fr) 42px;
   align-items: center;
+  overflow: hidden;
 }
 
 .mode-row {
@@ -71,29 +72,30 @@ input {
 }
 
 .timer-title {
-  height: 32px;
+  height: 30px;
   border-radius: 999px;
   display: grid;
   place-items: center;
   background: #fff;
-  box-shadow: inset 0 0 0 1px var(--line), 0 4px 10px rgba(30, 34, 48, .08);
+  box-shadow: inset 0 0 0 1px var(--line), 0 5px 12px rgba(30, 34, 48, .07);
   color: var(--teal);
+  font-size: 18px;
   font-weight: 800;
 }
 
 .icon-button {
-  width: 36px;
-  height: 32px;
+  width: 34px;
+  height: 30px;
   border-radius: 50%;
   background: transparent;
   color: var(--teal);
-  font-size: 22px;
+  font-size: 21px;
   line-height: 1;
 }
 
 .time-readout {
   text-align: center;
-  font-size: clamp(42px, 12svw, 64px);
+  font-size: clamp(38px, 10dvw, 50px);
   line-height: 1;
   letter-spacing: 0;
   font-weight: 900;
@@ -107,25 +109,26 @@ input {
   min-height: 0;
   display: grid;
   place-items: center;
+  overflow: visible;
 }
 
 .dial {
   position: relative;
-  width: min(70vw, 280px, 100%);
+  width: min(48dvw, 184px, 100%);
   aspect-ratio: 1;
   border-radius: 50%;
   background:
     repeating-conic-gradient(from 0deg, #666974 0deg 1deg, transparent 1deg 6deg),
-    radial-gradient(circle at 50% 50%, var(--bg) 0 57%, transparent 58%),
+    radial-gradient(circle at 50% 50%, var(--bg) 0 55%, transparent 56%),
     var(--card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 9px 20px rgba(28, 32, 42, .10);
   transform: rotate(0deg);
 }
 
 .dial::before {
   content: "";
   position: absolute;
-  inset: 7%;
+  inset: 12%;
   border-radius: 50%;
   background: var(--bg);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .85);
@@ -135,32 +138,32 @@ input {
   position: absolute;
   z-index: 2;
   color: #585b66;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
   transform: translate(-50%, -50%);
   font-variant-numeric: tabular-nums;
 }
 
-.l0 { left: 50%; top: -5%; }
-.l5 { left: 76%; top: 2%; }
-.l10 { left: 96%; top: 22%; }
-.l15 { left: 104%; top: 50%; }
-.l20 { left: 96%; top: 78%; }
-.l25 { left: 76%; top: 98%; }
-.l30 { left: 50%; top: 106%; }
-.l35 { left: 24%; top: 98%; }
-.l40 { left: 4%; top: 78%; }
-.l45 { left: -4%; top: 50%; }
-.l50 { left: 4%; top: 22%; }
-.l55 { left: 24%; top: 2%; }
+.l0 { left: 50%; top: 7%; }
+.l5 { left: 73%; top: 11%; }
+.l10 { left: 89%; top: 27%; }
+.l15 { left: 94%; top: 50%; }
+.l20 { left: 89%; top: 73%; }
+.l25 { left: 73%; top: 89%; }
+.l30 { left: 50%; top: 94%; }
+.l35 { left: 27%; top: 89%; }
+.l40 { left: 11%; top: 73%; }
+.l45 { left: 6%; top: 50%; }
+.l50 { left: 11%; top: 27%; }
+.l55 { left: 27%; top: 11%; }
 
 .hand {
   position: absolute;
   z-index: 3;
-  width: 7px;
-  height: 32%;
-  left: calc(50% - 3.5px);
-  top: 18%;
+  width: 5px;
+  height: 30%;
+  left: calc(50% - 2.5px);
+  top: 20%;
   border-radius: 999px;
   background: linear-gradient(#e4e5eb, #f2f3f7);
   transform-origin: 50% 100%;
@@ -171,7 +174,7 @@ input {
 .knob {
   position: absolute;
   z-index: 4;
-  width: 13%;
+  width: 15%;
   aspect-ratio: 1;
   left: 50%;
   top: 18%;
@@ -183,13 +186,13 @@ input {
 
 .timer-actions {
   display: grid;
-  grid-template-columns: 1fr 66px 100px;
+  grid-template-columns: 1fr 64px 104px;
   gap: 8px;
   align-items: center;
 }
 
 .primary-control {
-  height: 44px;
+  height: 40px;
   border-radius: 999px;
   background: var(--card);
   color: #595c64;
@@ -198,7 +201,7 @@ input {
 }
 
 .small-control {
-  height: 38px;
+  height: 36px;
   border-radius: 999px;
   background: transparent;
   box-shadow: inset 0 0 0 1px var(--line);
@@ -216,8 +219,9 @@ input {
 
 .month-panel {
   display: grid;
-  grid-template-rows: 42px minmax(0, 1fr) 36px;
+  grid-template-rows: 40px minmax(0, 1fr) 34px;
   gap: 8px;
+  min-height: 0;
 }
 
 .month-header {
@@ -227,7 +231,7 @@ input {
 }
 
 .month-nav {
-  height: 38px;
+  height: 36px;
   border-radius: 50%;
   background: transparent;
   color: #353944;
@@ -243,7 +247,7 @@ input {
 }
 
 .month-title strong {
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.05;
   font-weight: 900;
   letter-spacing: 0;
@@ -251,20 +255,21 @@ input {
 
 .month-title span {
   color: var(--teal);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
 }
 
 .calendar {
   min-height: 0;
-  padding: 10px 10px 12px;
-  border-radius: 20px;
+  padding: 9px 9px 10px;
+  border-radius: 18px;
   background: var(--card);
   box-shadow: var(--shadow);
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 20px repeat(6, minmax(0, 1fr));
+  grid-template-rows: 18px repeat(var(--week-rows, 5), minmax(0, 1fr));
   gap: 5px;
+  overflow: hidden;
 }
 
 .weekday,
@@ -277,16 +282,16 @@ input {
 
 .weekday {
   color: #9b9da5;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .day {
   position: relative;
-  border-radius: 11px;
+  border-radius: 10px;
   border: 1px solid var(--line);
   background: #fff;
   color: var(--ink);
-  font-size: 16px;
+  font-size: clamp(13px, 3.9dvw, 16px);
   font-variant-numeric: tabular-nums;
   box-shadow: 0 2px 5px rgba(25, 28, 38, .04);
 }
@@ -324,13 +329,13 @@ input {
 .daily-strip {
   min-width: 0;
   padding: 0 10px;
-  border-radius: 2px;
+  border-radius: 8px;
   background: #eaf3f5;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 900;
   white-space: nowrap;
 }
@@ -397,22 +402,22 @@ input {
 
 @media (max-height: 740px) {
   .app {
-    grid-template-rows: minmax(220px, 39svh) minmax(312px, 1fr);
-    gap: 8px;
+    grid-template-rows: clamp(226px, 36dvh, 252px) minmax(0, 1fr);
+    gap: 7px;
     padding-top: max(8px, env(safe-area-inset-top));
     padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
 
   .timer-panel {
-    grid-template-rows: 32px 48px minmax(116px, 1fr) 42px;
+    grid-template-rows: 30px 40px minmax(0, 1fr) 38px;
   }
 
   .dial {
-    width: min(58vw, 218px, 100%);
+    width: min(42dvw, 158px, 100%);
   }
 
   .time-readout {
-    font-size: 42px;
+    font-size: 38px;
   }
 
   .calendar {
@@ -422,11 +427,14 @@ input {
 
   .day {
     border-radius: 9px;
-    font-size: 14px;
   }
 
   .month-title strong {
-    font-size: 20px;
+    font-size: 18px;
+  }
+
+  .daily-strip {
+    font-size: 13px;
   }
 }
 

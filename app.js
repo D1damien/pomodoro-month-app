@@ -145,7 +145,11 @@
       els.calendar.appendChild(node);
     });
 
-    for (let slot = 0; slot < 42; slot += 1) {
+    const weekRows = Math.ceil((firstDay + daysInMonth) / 7);
+    const slotCount = weekRows * 7;
+    els.calendar.style.setProperty("--week-rows", weekRows);
+
+    for (let slot = 0; slot < slotCount; slot += 1) {
       const dayNum = slot - firstDay + 1;
       const button = document.createElement("button");
       button.type = "button";

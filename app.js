@@ -32,7 +32,6 @@
     knob: document.getElementById("knob"),
     startPause: document.getElementById("startPauseButton"),
     icon: document.getElementById("controlIcon"),
-    reset: document.getElementById("resetButton"),
     punch: document.getElementById("punchButton"),
     calendar: document.getElementById("calendar"),
     monthTitle: document.getElementById("monthTitle"),
@@ -260,7 +259,6 @@
     setSelectedMinutes(minuteFromPoint(event.clientX, event.clientY));
   });
   els.startPause.addEventListener("click", startPause);
-  els.reset.addEventListener("click", resetTimer);
   els.punch.addEventListener("click", () => addRecordMinutes(QUICK_PUNCH_MINUTES));
   els.prev.addEventListener("click", () => {
     state.visibleMonth = new Date(state.visibleMonth.getFullYear(), state.visibleMonth.getMonth() - 1, 1);

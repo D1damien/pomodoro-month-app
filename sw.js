@@ -1,9 +1,9 @@
-const CACHE = "pomodoro-month-v7";
+const CACHE = "pomodoro-month-v9";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=20260517-dial",
-  "./app.js?v=20260517-dial",
+  "./styles.css?v=20260517-centered",
+  "./app.js?v=20260517-centered",
   "./manifest.webmanifest",
   "./icons/icon-180.png",
   "./icons/icon-192.png",

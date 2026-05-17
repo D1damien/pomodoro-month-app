@@ -39,29 +39,33 @@ button {
 }
 
 .app {
-  width: min(100vw, 430px);
+  width: 100%;
+  max-width: 390px;
   height: 100dvh;
   margin: 0 auto;
   padding: max(8px, env(safe-area-inset-top)) 14px max(8px, env(safe-area-inset-bottom));
   display: grid;
-  grid-template-rows: clamp(360px, 55dvh, 430px) minmax(0, 1fr);
-  gap: 10px;
+  grid-template-rows: clamp(322px, 50dvh, 376px) minmax(0, 1fr);
+  gap: 8px;
 }
 
 .timer-panel,
 .month-panel {
   min-height: 0;
+  min-width: 0;
+  width: 100%;
 }
 
 .timer-panel {
   display: grid;
-  grid-template-rows: 76px minmax(0, 1fr) 58px;
+  grid-template-rows: 62px minmax(0, 1fr) 46px;
   align-items: center;
+  overflow: hidden;
 }
 
 .time-readout {
   text-align: center;
-  font-size: clamp(54px, 15vw, 72px);
+  font-size: clamp(46px, 12.5vw, 58px);
   line-height: 1;
   letter-spacing: 0;
   font-weight: 900;
@@ -78,7 +82,7 @@ button {
 }
 
 .dial {
-  --dial-size: min(72vw, 300px);
+  --dial-size: min(60vw, 238px);
   position: relative;
   width: var(--dial-size);
   aspect-ratio: 1;
@@ -86,6 +90,7 @@ button {
   background: var(--bg);
   box-shadow: var(--shadow);
   touch-action: none;
+  overflow: visible;
 }
 
 .dial::before {
@@ -117,14 +122,14 @@ button {
   height: 10px;
   border-radius: 999px;
   background: #676a73;
-  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--dial-size) * -0.445));
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--dial-size) * -0.392));
   transform-origin: 50% 50%;
 }
 
 .tick-major {
   width: 2.5px;
-  height: 19px;
-  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--dial-size) * -0.422));
+  height: 16px;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--dial-size) * -0.372));
 }
 
 .tick-label {
@@ -132,22 +137,22 @@ button {
   left: 50%;
   top: 50%;
   color: #5d6068;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 800;
   line-height: 1;
   font-variant-numeric: tabular-nums;
   transform:
     translate(-50%, -50%)
     rotate(var(--angle))
-    translateY(calc(var(--dial-size) * -0.565))
+    translateY(calc(var(--dial-size) * -0.49))
     rotate(var(--angle-neg));
 }
 
 .hand {
   z-index: 4;
-  width: 8px;
+  width: 6px;
   height: 34%;
-  left: calc(50% - 4px);
+  left: calc(50% - 3px);
   top: 16%;
   border-radius: 999px;
   background: linear-gradient(#dadce4, #f2f3f7);
@@ -172,7 +177,7 @@ button {
 
 .knob {
   z-index: 6;
-  width: calc(var(--dial-size) * .13);
+  width: calc(var(--dial-size) * .12);
   aspect-ratio: 1;
   left: 50%;
   top: 9%;
@@ -191,13 +196,13 @@ button {
 
 .timer-actions {
   display: grid;
-  grid-template-columns: 1fr 66px;
-  gap: 10px;
+  grid-template-columns: 1fr;
   align-items: center;
+  width: min(100%, 308px);
+  margin: 0 auto;
 }
 
 .primary-control,
-.small-control,
 .punch-control,
 .month-nav {
   border: 0;
@@ -205,7 +210,7 @@ button {
 }
 
 .primary-control {
-  height: 48px;
+  height: 40px;
   border-radius: 999px;
   background: var(--card);
   color: #5c5f66;
@@ -217,30 +222,23 @@ button {
   opacity: .45;
 }
 
-.small-control {
-  height: 38px;
-  border-radius: 999px;
-  background: transparent;
-  box-shadow: inset 0 0 0 1px var(--line);
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 900;
-}
-
 .month-panel {
   display: grid;
-  grid-template-rows: 42px minmax(0, 1fr) 48px;
-  gap: 8px;
+  grid-template-rows: 38px minmax(0, 1fr) 44px;
+  gap: 7px;
+  overflow: hidden;
 }
 
 .month-header {
   display: grid;
   grid-template-columns: 38px 1fr 38px;
   align-items: center;
+  min-width: 0;
+  width: 100%;
 }
 
 .month-nav {
-  height: 38px;
+  height: 34px;
   border-radius: 50%;
   background: transparent;
   color: #333743;
@@ -256,7 +254,7 @@ button {
 }
 
 .month-title strong {
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1;
   font-weight: 900;
   letter-spacing: 0;
@@ -269,15 +267,18 @@ button {
 }
 
 .calendar {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 0;
-  padding: 8px 8px 10px;
-  border-radius: 18px;
+  padding: 7px;
+  border-radius: 16px;
   background: var(--card);
   box-shadow: var(--shadow);
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 18px repeat(var(--week-rows, 5), minmax(0, 1fr));
-  gap: 5px;
+  grid-template-rows: 16px repeat(var(--week-rows, 5), minmax(0, 1fr));
+  gap: 4px;
   overflow: hidden;
 }
 
@@ -291,15 +292,21 @@ button {
 
 .weekday {
   color: #9b9da5;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .day {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
   position: relative;
   grid-template-rows: 1fr auto;
   align-content: center;
   gap: 1px;
-  border-radius: 10px;
+  border-radius: 9px;
   border: 1px solid var(--line);
   background: #fff;
   color: var(--ink);
@@ -311,7 +318,7 @@ button {
 }
 
 .day-number {
-  font-size: clamp(13px, 3.7vw, 16px);
+  font-size: clamp(12px, 3.5vw, 15px);
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
@@ -319,7 +326,7 @@ button {
 .day-record {
   min-height: 10px;
   color: var(--teal);
-  font-size: 9px;
+  font-size: 8px;
   line-height: 1;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
@@ -336,41 +343,50 @@ button {
 }
 
 .daily-strip {
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 10px;
+  grid-template-columns: 96px 1fr;
+  gap: 8px;
   align-items: center;
 }
 
 .punch-control {
-  height: 38px;
+  height: 36px;
   border-radius: 999px;
   background: var(--teal);
   color: #fff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 900;
   box-shadow: 0 8px 18px rgba(29, 127, 148, .22);
 }
 
 .daily-copy {
   min-width: 0;
-  height: 42px;
-  padding: 0 10px;
+  height: 38px;
+  padding: 0 9px;
   border-radius: 8px;
   background: #eaf3f5;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr 1fr;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
+  gap: 0;
+  font-size: 11px;
   font-weight: 900;
   white-space: nowrap;
+  line-height: 1;
+}
+
+.daily-copy span {
+  min-width: 0;
 }
 
 .daily-copy span:last-child {
-  text-align: right;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .settings {
@@ -435,26 +451,26 @@ button {
 
 @media (max-height: 740px) {
   .app {
-    grid-template-rows: clamp(316px, 52dvh, 350px) minmax(0, 1fr);
-    gap: 7px;
+    grid-template-rows: clamp(292px, 47dvh, 318px) minmax(0, 1fr);
+    gap: 6px;
     padding-top: max(7px, env(safe-area-inset-top));
     padding-bottom: max(7px, env(safe-area-inset-bottom));
   }
 
   .timer-panel {
-    grid-template-rows: 58px minmax(0, 1fr) 48px;
+    grid-template-rows: 48px minmax(0, 1fr) 40px;
   }
 
   .time-readout {
-    font-size: 48px;
+    font-size: 40px;
   }
 
   .dial {
-    --dial-size: min(64vw, 236px);
+    --dial-size: min(52vw, 190px);
   }
 
   .tick-label {
-    font-size: 14px;
+    font-size: 11px;
   }
 
   .tick-major {
@@ -471,12 +487,12 @@ button {
   }
 
   .month-panel {
-    grid-template-rows: 36px minmax(0, 1fr) 44px;
+    grid-template-rows: 34px minmax(0, 1fr) 40px;
     gap: 6px;
   }
 
   .month-title strong {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .month-title span,
@@ -506,5 +522,6 @@ button {
 
   .app {
     height: min(100dvh, 940px);
+    max-width: 390px;
   }
 }

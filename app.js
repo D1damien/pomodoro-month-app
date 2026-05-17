@@ -26,8 +26,6 @@
   const els = {
     time: document.getElementById("timeReadout"),
     dial: document.getElementById("dial"),
-    ticks: document.getElementById("ticks"),
-    labels: document.getElementById("tickLabels"),
     hand: document.getElementById("hand"),
     knob: document.getElementById("knob"),
     startPause: document.getElementById("startPauseButton"),
@@ -61,27 +59,6 @@
     }));
   }
 
-  function buildDial() {
-    els.ticks.innerHTML = "";
-    els.labels.innerHTML = "";
-
-    for (let minute = 0; minute < 60; minute += 1) {
-      const tick = document.createElement("i");
-      tick.className = minute % 5 === 0 ? "tick tick-major" : "tick";
-      tick.style.setProperty("--angle", `${minute * 6}deg`);
-      els.ticks.appendChild(tick);
-    }
-
-    for (let minute = 0; minute < 60; minute += 5) {
-      const label = document.createElement("span");
-      label.className = "tick-label";
-      label.textContent = minute;
-      label.style.setProperty("--angle", `${minute * 6}deg`);
-      label.style.setProperty("--angle-neg", `${minute * -6}deg`);
-      els.labels.appendChild(label);
-    }
-  }
-
   function setSelectedMinutes(minutes, shouldSave = true) {
     const normalized = ((Math.round(minutes) % 60) + 60) % 60;
     state.selectedMinutes = normalized;
@@ -101,22 +78,26 @@
     els.icon.textContent = state.running ? "Ⅱ" : "▶";
     els.startPause.disabled = !state.running && state.selectedMinutes === 0;
     els.startPause.setAttribute("aria-label", state.running ? "暂停" : "开始");
-
     const angle = state.running && state.total
       ? ((state.total - state.remaining) / 60) * 6
       : state.selectedMinutes * 6;
-    const radius = els.dial.clientWidth * 0.41;
-    const center = els.dial.clientWidth / 2;
+    const rect = els.dial.getBoundingClientRect();
+    const radius = rect.width * 0.384;
+    const centerX = rect.width * 0.5;
+    const centerY = rect.height * 0.5;
     const radians = angle * Math.PI / 180;
-    els.hand.style.transform = `rotate(${angle}deg)`;
-    els.knob.style.left = `${center + Math.sin(radians) * radius}px`;
-    els.knob.style.top = `${center - Math.cos(radians) * radius}px`;
+    els.hand.style.height = `${radius}px`;
+    els.hand.style.left = `${centerX}px`;
+    els.hand.style.top = `${centerY - radius}px`;
+    els.hand.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+    els.knob.style.left = `${centerX + Math.sin(radians) * radius}px`;
+    els.knob.style.top = `${centerY - Math.cos(radians) * radius}px`;
   }
 
   function minuteFromPoint(clientX, clientY) {
     const rect = els.dial.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+    const centerX = rect.left + rect.width * 0.5;
+    const centerY = rect.top + rect.height * 0.5;
     const radians = Math.atan2(clientX - centerX, centerY - clientY);
     const degrees = (radians * 180 / Math.PI + 360) % 360;
     return Math.round(degrees / 6) % 60;
@@ -124,8 +105,9 @@
 
   function startDrag(event) {
     if (state.running) return;
+    event.stopPropagation();
     state.dragging = true;
-    els.knob.setPointerCapture(event.pointerId);
+    event.currentTarget.setPointerCapture(event.pointerId);
     setSelectedMinutes(minuteFromPoint(event.clientX, event.clientY));
   }
 
@@ -250,14 +232,14 @@
     els.dailySummary.textContent = `当日番茄钟：${formatHours(selected.minutes)}`;
   }
 
+  els.dial.addEventListener("pointerdown", startDrag);
+  els.dial.addEventListener("pointermove", continueDrag);
+  els.dial.addEventListener("pointerup", stopDrag);
+  els.dial.addEventListener("pointercancel", stopDrag);
   els.knob.addEventListener("pointerdown", startDrag);
   els.knob.addEventListener("pointermove", continueDrag);
   els.knob.addEventListener("pointerup", stopDrag);
   els.knob.addEventListener("pointercancel", stopDrag);
-  els.dial.addEventListener("pointerdown", (event) => {
-    if (event.target === els.knob || state.running) return;
-    setSelectedMinutes(minuteFromPoint(event.clientX, event.clientY));
-  });
   els.startPause.addEventListener("click", startPause);
   els.punch.addEventListener("click", () => addRecordMinutes(QUICK_PUNCH_MINUTES));
   els.prev.addEventListener("click", () => {
@@ -269,7 +251,6 @@
     renderCalendar();
   });
 
-  buildDial();
   load();
   renderCalendar();
   window.addEventListener("resize", renderTimer);

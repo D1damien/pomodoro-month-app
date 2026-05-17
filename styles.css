@@ -45,7 +45,7 @@ button {
   margin: 0 auto;
   padding: max(8px, env(safe-area-inset-top)) 14px max(8px, env(safe-area-inset-bottom));
   display: grid;
-  grid-template-rows: clamp(322px, 50dvh, 376px) minmax(0, 1fr);
+  grid-template-rows: clamp(358px, 52dvh, 392px) minmax(0, 1fr);
   gap: 8px;
 }
 
@@ -58,14 +58,14 @@ button {
 
 .timer-panel {
   display: grid;
-  grid-template-rows: 62px minmax(0, 1fr) 46px;
+  grid-template-rows: 48px minmax(0, 1fr) 38px;
   align-items: center;
   overflow: hidden;
 }
 
 .time-readout {
   text-align: center;
-  font-size: clamp(46px, 12.5vw, 58px);
+  font-size: clamp(28px, 8.5vw, 36px);
   line-height: 1;
   letter-spacing: 0;
   font-weight: 900;
@@ -79,108 +79,86 @@ button {
   min-height: 0;
   display: grid;
   place-items: center;
+  overflow: visible;
 }
 
 .dial {
-  --dial-size: min(60vw, 238px);
+  --clock-width: min(88vw, 320px);
   position: relative;
-  width: var(--dial-size);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--bg);
-  box-shadow: var(--shadow);
+  width: var(--clock-width);
+  aspect-ratio: 1228 / 1152;
+  background: transparent;
   touch-action: none;
   overflow: visible;
 }
 
-.dial::before {
-  content: "";
+.clock-image {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background: var(--bg);
-}
-
-.ticks,
-.tick-labels,
-.hand,
-.knob {
-  position: absolute;
-}
-
-.ticks,
-.tick-labels {
-  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
   pointer-events: none;
 }
 
-.tick {
+.fixed-hand-cover {
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 2px;
-  height: 10px;
+  top: 11%;
+  width: 2.7%;
+  height: 37%;
   border-radius: 999px;
-  background: #676a73;
-  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--dial-size) * -0.392));
-  transform-origin: 50% 50%;
-}
-
-.tick-major {
-  width: 2.5px;
-  height: 16px;
-  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--dial-size) * -0.372));
-}
-
-.tick-label {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  color: #5d6068;
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  transform:
-    translate(-50%, -50%)
-    rotate(var(--angle))
-    translateY(calc(var(--dial-size) * -0.49))
-    rotate(var(--angle-neg));
-}
-
-.hand {
-  z-index: 4;
-  width: 6px;
-  height: 34%;
-  left: calc(50% - 3px);
-  top: 16%;
-  border-radius: 999px;
-  background: linear-gradient(#dadce4, #f2f3f7);
-  transform-origin: 50% 100%;
-  transform: rotate(0deg);
-  box-shadow: 0 3px 8px rgba(80, 84, 94, .12);
-  pointer-events: none;
-}
-
-.hand::after {
-  content: "";
-  position: absolute;
-  width: calc(var(--dial-size) * .21);
-  aspect-ratio: 1;
-  left: 50%;
-  bottom: calc(var(--dial-size) * -.12);
-  border-radius: 50%;
-  background: var(--bg);
+  background: #f4f5fa;
   transform: translateX(-50%);
-  box-shadow: 0 6px 12px rgba(80, 84, 94, .18);
+  pointer-events: none;
+  z-index: 2;
 }
 
-.knob {
+.fixed-knob-cover {
+  position: absolute;
+  left: 50%;
+  top: 9.2%;
+  width: 11%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f4f5fa;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.live-hand {
+  position: absolute;
+  z-index: 4;
+  width: 1.7%;
+  border-radius: 999px;
+  background: linear-gradient(#d9dce4, #f3f4f8);
+  transform-origin: 50% 100%;
+  box-shadow: 0 3px 8px rgba(80, 84, 94, .13);
+  pointer-events: none;
+}
+
+.live-hand::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -22%;
+  width: 27px;
+  height: 27px;
+  border-radius: 999px;
+  background: #f4f5fa;
+  transform: translateX(-50%);
+}
+
+.live-knob {
+  position: absolute;
   z-index: 6;
-  width: calc(var(--dial-size) * .12);
+  width: 11.2%;
   aspect-ratio: 1;
   left: 50%;
-  top: 9%;
+  top: 9.2%;
   border: 0;
   border-radius: 50%;
   background: var(--tomato);
@@ -190,7 +168,7 @@ button {
   touch-action: none;
 }
 
-.knob:active {
+.live-knob:active {
   cursor: grabbing;
 }
 
@@ -210,12 +188,12 @@ button {
 }
 
 .primary-control {
-  height: 40px;
+  height: 34px;
   border-radius: 999px;
   background: var(--card);
   color: #5c5f66;
   box-shadow: var(--shadow);
-  font-size: 26px;
+  font-size: 15px;
 }
 
 .primary-control:disabled {
@@ -451,34 +429,22 @@ button {
 
 @media (max-height: 740px) {
   .app {
-    grid-template-rows: clamp(292px, 47dvh, 318px) minmax(0, 1fr);
+    grid-template-rows: clamp(322px, 51dvh, 348px) minmax(0, 1fr);
     gap: 6px;
     padding-top: max(7px, env(safe-area-inset-top));
     padding-bottom: max(7px, env(safe-area-inset-bottom));
   }
 
   .timer-panel {
-    grid-template-rows: 48px minmax(0, 1fr) 40px;
+    grid-template-rows: 40px minmax(0, 1fr) 34px;
   }
 
   .time-readout {
-    font-size: 40px;
+    font-size: 28px;
   }
 
   .dial {
-    --dial-size: min(52vw, 190px);
-  }
-
-  .tick-label {
-    font-size: 11px;
-  }
-
-  .tick-major {
-    height: 15px;
-  }
-
-  .tick {
-    height: 8px;
+    --clock-width: min(82vw, 282px);
   }
 
   .calendar {

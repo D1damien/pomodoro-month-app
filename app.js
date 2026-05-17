@@ -26,6 +26,7 @@
   const els = {
     time: document.getElementById("timeReadout"),
     dial: document.getElementById("dial"),
+    sector: document.getElementById("selectionSector"),
     hand: document.getElementById("hand"),
     knob: document.getElementById("knob"),
     startPause: document.getElementById("startPauseButton"),
@@ -42,6 +43,7 @@
   };
 
   function load() {
+    let previewMinutes = null;
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
       state.records = saved.records || {};
@@ -49,7 +51,11 @@
     } catch (_) {
       state.records = {};
     }
-    setSelectedMinutes(state.selectedMinutes, false);
+    const preview = new URLSearchParams(window.location.search).get("previewMinutes");
+    if (preview !== null && Number.isFinite(Number(preview))) {
+      previewMinutes = Number(preview);
+    }
+    setSelectedMinutes(previewMinutes ?? state.selectedMinutes, false);
   }
 
   function save() {
@@ -86,6 +92,8 @@
     const centerX = rect.width * 0.5;
     const centerY = rect.height * 0.5;
     const radians = angle * Math.PI / 180;
+    els.sector.style.setProperty("--sector-angle", `${angle}deg`);
+    els.sector.style.setProperty("--sector-opacity", angle > 0 ? "1" : "0");
     els.hand.style.height = `${radius}px`;
     els.hand.style.left = `${centerX}px`;
     els.hand.style.top = `${centerY - radius}px`;

@@ -13,7 +13,7 @@
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="icons/icon-180.png">
     <link rel="icon" href="icons/icon-192.png">
-    <link rel="stylesheet" href="styles.css?v=20260517-real-knob">
+    <link rel="stylesheet" href="styles.css?v=20260517-sector">
   </head>
   <body>
     <main class="app" aria-label="番茄钟月记录">
@@ -23,6 +23,7 @@
         <div class="dial-wrap">
           <div class="dial" id="dial">
             <img class="clock-image" src="assets/clock-reference.png" alt="番茄钟表盘">
+            <div class="selection-sector" id="selectionSector" aria-hidden="true"></div>
             <div class="fixed-hand-cover" aria-hidden="true"></div>
             <div class="fixed-knob-cover" aria-hidden="true"></div>
             <div class="live-hand" id="hand" aria-hidden="true"></div>
@@ -59,6 +60,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=20260517-real-knob"></script>
+    <script src="app.js?v=20260517-sector"></script>
   </body>
 </html>

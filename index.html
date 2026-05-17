@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f6fb">
+    <title>番茄钟月记录</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app" aria-label="番茄钟月记录">
+      <section class="timer-panel" aria-label="番茄钟">
+        <div class="mode-row">
+          <div class="timer-title">专注</div>
+          <button class="icon-button" id="settingsButton" type="button" aria-label="设置">
+            <span aria-hidden="true">⚙</span>
+          </button>
+        </div>
+
+        <div class="time-readout" id="timeReadout">25:00</div>
+
+        <div class="dial-wrap" aria-hidden="true">
+          <div class="dial" id="dial">
+            <div class="tick-label l0">0</div>
+            <div class="tick-label l5">5</div>
+            <div class="tick-label l10">10</div>
+            <div class="tick-label l15">15</div>
+            <div class="tick-label l20">20</div>
+            <div class="tick-label l25">25</div>
+            <div class="tick-label l30">30</div>
+            <div class="tick-label l35">35</div>
+            <div class="tick-label l40">40</div>
+            <div class="tick-label l45">45</div>
+            <div class="tick-label l50">50</div>
+            <div class="tick-label l55">55</div>
+            <div class="hand" id="hand"></div>
+            <div class="knob" id="knob"></div>
+          </div>
+        </div>
+
+        <div class="timer-actions">
+          <button class="primary-control" id="startPauseButton" type="button" aria-label="开始">
+            <span id="controlIcon">▶</span>
+          </button>
+          <button class="small-control" id="resetButton" type="button">重置</button>
+          <button class="small-control accent" id="punchButton" type="button">补打卡 +1</button>
+        </div>
+      </section>
+
+      <section class="month-panel" aria-label="月记录">
+        <header class="month-header">
+          <button class="month-nav" id="prevMonth" type="button" aria-label="上个月">‹</button>
+          <div class="month-title">
+            <strong id="monthTitle">2026 年 5 月</strong>
+            <span id="monthSummary">本月 0 个 · 0.0h</span>
+          </div>
+          <button class="month-nav" id="nextMonth" type="button" aria-label="下个月">›</button>
+        </header>
+
+        <div class="calendar" id="calendar" aria-label="月历"></div>
+
+        <footer class="daily-strip">
+          <span id="selectedDate">2026-05-16</span>
+          <span id="dailySummary">当日：0 个 · 0.0h</span>
+        </footer>
+      </section>
+    </main>
+
+    <dialog class="settings" id="settingsDialog">
+      <form method="dialog">
+        <h2>设置</h2>
+        <label>
+          专注分钟
+          <input id="focusMinutes" type="number" min="1" max="120" value="25">
+        </label>
+        <menu>
+          <button value="cancel">取消</button>
+          <button id="saveSettings" value="default">保存</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>

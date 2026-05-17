@@ -1,0 +1,9 @@
+{
+  "name": "番茄钟月记录",
+  "short_name": "番茄钟",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f6fb",
+  "theme_color": "#f5f6fb",
+  "icons": []
+}
